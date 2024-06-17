@@ -46,7 +46,7 @@ if __name__ == '__main__':
 ---
 You can now run the program by running `main.py`.
 ```bash
-py main.py
+py example.py
 ```
 
 ## Taggers
@@ -83,5 +83,5 @@ This tagger takes no arguments, so just call the constructor:
 ```py
 bpm_tagger = BPMTagger()
 ```
-and addd the tagger to the taggers list.
+and add the tagger to the taggers list.
 

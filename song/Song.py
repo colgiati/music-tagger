@@ -25,6 +25,10 @@ class Song(ABC):
         pass
 
     @abstractmethod
+    def set_title(self, title: str):
+        pass
+
+    @abstractmethod
     def get_artists(self) -> List[str]:
         pass
 

@@ -22,6 +22,10 @@ class FlacSong(Song):
     def get_title(self) -> str:
         return self._flac.get('TITLE')[0]
 
+    def set_title(self, title: str):
+        self._flac['TITLE'] = [title]
+        self._flac.save()
+
     def get_artists(self) -> List[str]:
         return self._flac.get('ARTIST')
 

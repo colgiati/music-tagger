@@ -1,6 +1,6 @@
 from typing import List
 
-from mutagen.id3 import USLT, SYLT, Encoding, TBPM
+from mutagen.id3 import USLT, SYLT, Encoding, TBPM, TIT2
 from mutagen.mp3 import MP3
 
 from song import Song
@@ -26,6 +26,11 @@ class Mp3Song(Song):
 
     def get_title(self) -> str:
         return self._mp3.get('TIT2').text[0]
+
+    def set_title(self, title: str):
+        title_tag = TIT2(Encoding.UTF8, text=[title])
+        self._mp3['TIT2'] = title_tag
+        self._mp3.save()
 
     def get_artists(self) -> List[str]:
         return self._mp3.get('TPE1').text[0]
