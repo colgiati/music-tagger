@@ -14,7 +14,7 @@ class LyricsTagger(TagComponent):
         self._sources = sources
 
     def _tag(self, song: Song):
-        if not song.has_lyrics() or True:
+        if not song.has_lyrics():
             lyrics = self._get_song_lyrics(
                 title=self._sanitize_song_name(song.get_title()),
                 artist=song.get_artists()[0],

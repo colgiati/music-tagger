@@ -7,6 +7,14 @@ from song.Song import Song
 
 class FlacSong(Song):
     _flac: FLAC
+    _track_number_tags: List[str] = [
+        'TRACKTOTAL',
+        'TRACKNUMBER',
+    ]
+    _disc_number_tags: List[str] = [
+        'DISCTOTAL',
+        'DISCNUMBER',
+    ]
 
     def __init__(self, path: str):
         super().__init__(path)
@@ -43,4 +51,28 @@ class FlacSong(Song):
 
     def set_bpm(self, bpm: int) -> None:
         self._flac['BPM'] = str(bpm)
+        self._flac.save()
+
+    def pad_track_numbers(self) -> None:
+        for tag in self._track_number_tags:
+            [value] = self._flac.get(tag)
+            self._flac[tag] = [f'{int(value):02d}']
+        self._flac.save()
+
+    def pad_disc_numbers(self) -> None:
+        for tag in self._track_number_tags:
+            [value] = self._flac.get(tag)
+            self._flac[tag] = [f'{int(value):02d}']
+        self._flac.save()
+
+    def fix_track_number_tags(self) -> None:
+        if values := self._flac.get('totaldiscs'):
+            self._flac['totaldiscs'] = []
+            self._flac['DISCTOTAL'] = values
+        if values := self._flac.get('discnumber'):
+            self._flac['discnumber'] = []
+            self._flac['DISCNUMBER'] = values
+        if values := self._flac.get('totaltracks'):
+            self._flac['totaltracks'] = []
+            self._flac['TRACKTOTAL'] = values
         self._flac.save()

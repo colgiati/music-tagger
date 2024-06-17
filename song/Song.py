@@ -49,5 +49,17 @@ class Song(ABC):
         pass
 
     @abstractmethod
-    def set_bpm(self, bpm: int) -> None:
+    def set_bpm(self, bpm: int):
+        pass
+
+    @abstractmethod
+    def pad_track_numbers(self) -> None:
+        pass
+
+    @abstractmethod
+    def pad_disc_numbers(self) -> None:
+        pass
+
+    @abstractmethod
+    def fix_track_number_tags(self) -> None:
         pass

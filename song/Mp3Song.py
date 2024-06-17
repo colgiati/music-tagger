@@ -1,6 +1,6 @@
 from typing import List
 
-from mutagen.id3 import USLT, SYLT, Encoding, TBPM, TIT2, TPE1
+from mutagen.id3 import USLT, SYLT, Encoding, TBPM, TIT2, TPE1, TPOS, TRCK, TXXX
 from mutagen.mp3 import MP3
 
 from song import Song
@@ -52,7 +52,28 @@ class Mp3Song(Song):
                 return True
         return False
 
-    def set_bpm(self, bpm: int) -> None:
+    def set_bpm(self, bpm: int):
         bpm_tag = TBPM(encoding=Encoding.UTF8, text=[bpm])
         self._mp3['TBPM'] = bpm_tag
         self._mp3.save()
+
+    def pad_track_numbers(self) -> None:
+        track_numbers = self._mp3.get('TRCK').text[0]
+        [current, total] = track_numbers.split('/')
+        disc_number_tag = TRCK(encoding=Encoding.UTF8, text=[f'{int(current):02d}/{int(total):02d}'])
+        self._mp3['TRCK'] = disc_number_tag
+        self._mp3.save()
+
+    def pad_disc_numbers(self) -> None:
+        disc_numbers = self._mp3.get('TPOS').text[0]
+        [current, total] = disc_numbers.split('/')
+        disc_number_tag = TPOS(encoding=Encoding.UTF8, text=[f'{int(current):02d}/{int(total):02d}'])
+        self._mp3['TPOS'] = disc_number_tag
+        if self._mp3.get('TXXX:DISCTOTAL'):
+            total_disc_number = self._mp3.get('TXXX:DISCTOTAL').text[0]
+            total_disc_number_tag = TXXX(encoding=Encoding.UTF8, desc='DISCTOTAL', text=[f'{int(total_disc_number):02d}'])
+            self._mp3['TXXX:DISCTOTAL'] = total_disc_number_tag
+        self._mp3.save()
+
+    def fix_track_number_tags(self) -> None:
+        pass
