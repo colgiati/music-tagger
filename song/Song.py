@@ -33,6 +33,10 @@ class Song(ABC):
         pass
 
     @abstractmethod
+    def set_artists(self, artists: List[str]):
+        pass
+
+    @abstractmethod
     def get_album(self) -> str:
         pass
 

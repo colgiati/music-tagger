@@ -29,6 +29,9 @@ class FlacSong(Song):
     def get_artists(self) -> List[str]:
         return self._flac.get('ARTIST')
 
+    def set_artists(self, artists: List[str]):
+        self._flac['ARTIST'] = artists
+
     def get_album(self) -> str:
         return self._flac.get('ALBUM')[0]
 
