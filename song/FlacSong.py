@@ -30,3 +30,10 @@ class FlacSong(Song):
 
     def get_length(self) -> int:
         return self._flac.info.length
+
+    def has_bpm(self) -> bool:
+        return self._flac.get('BPM') is not None
+
+    def set_bpm(self, bpm: int) -> None:
+        self._flac['BPM'] = str(bpm)
+        self._flac.save()

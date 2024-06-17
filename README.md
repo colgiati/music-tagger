@@ -1,6 +1,9 @@
 # music-tagger
 
-Little python library to help with tagging music files. Recursively tags files in a given folder.
+Little python library to help with tagging music files. 
+Recursively tags files in a given folder. 
+**Currently only works with .mp3 and .flac files.**
+Uses [mutagen](https://mutagen.readthedocs.io) to handle the tagging.
 
 ## Setup
 
@@ -25,11 +28,14 @@ path = 'C:/user/music'
 Set the taggers you would like to use.
 ```py
 taggers = [
+    BPMTagger(),
     LyricsTagger(
         sources=[LrcLib(), Spotify()]
     )
 ]
 ```
+The taggers are applied to each song separately in the given order.
+
 ---
 Build the Tagger. Set log=True if you would like the current directory to be printed.
 ```py
@@ -45,9 +51,8 @@ py main.py
 
 ## Taggers
 
-Currently only a single tagger exists (for adding synchronised lyrics). 
 More taggers exist in my private repository for this project.
-I will publish them later on, once I add .mp3 support (currently they only work with .flac files).
+They will be published later on, once I add .mp3 support (currently they only work with .flac files).
 
 ### LyricsTagger
 
@@ -69,4 +74,14 @@ lyrics_tagger = LyricsTagger(
 
 The sources are searched in the given order. If no lyrics are found in the first source, the next source is searched.
 
+### BPMTagger
+
+Uses [librosa](https://librosa.org/doc/latest/index.html) (which uses ML) to estimate the BPM of a song. 
+Adds the BPM as a tag.
+
+This tagger takes no arguments, so just call the constructor:
+```py
+bpm_tagger = BPMTagger()
+```
+and addd the tagger to the taggers list.
 

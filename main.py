@@ -1,9 +1,11 @@
 from lyric_source import LrcLibSource, SpotifySource
 from tag_component import LyricsTagger
+from tag_component.BPMTagger import BPMTagger
 from tagger import Tagger
 
 path = ''
 taggers = [
+    BPMTagger(),
     LyricsTagger(
         sources=[LrcLibSource(), SpotifySource()]
     )

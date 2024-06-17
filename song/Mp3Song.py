@@ -1,6 +1,6 @@
 from typing import List
 
-from mutagen.id3 import USLT, SYLT, Encoding
+from mutagen.id3 import USLT, SYLT, Encoding, TBPM
 from mutagen.mp3 import MP3
 
 from song import Song
@@ -35,3 +35,14 @@ class Mp3Song(Song):
 
     def get_length(self) -> int:
         return self._mp3.info.length
+
+    def has_bpm(self) -> bool:
+        for tag in self._mp3.tags:
+            if type(self._mp3.get(tag)) == TBPM:
+                return True
+        return False
+
+    def set_bpm(self, bpm: int) -> None:
+        bpm_tag = TBPM(encoding=Encoding.UTF8, text=[bpm])
+        self._mp3['TBPM'] = bpm_tag
+        self._mp3.save()

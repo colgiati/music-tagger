@@ -35,3 +35,11 @@ class Song(ABC):
     @abstractmethod
     def get_length(self) -> int:
         pass
+
+    @abstractmethod
+    def has_bpm(self) -> bool:
+        pass
+
+    @abstractmethod
+    def set_bpm(self, bpm: int) -> None:
+        pass
