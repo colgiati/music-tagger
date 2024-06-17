@@ -71,9 +71,20 @@ class Mp3Song(Song):
         self._mp3['TPOS'] = disc_number_tag
         if self._mp3.get('TXXX:DISCTOTAL'):
             total_disc_number = self._mp3.get('TXXX:DISCTOTAL').text[0]
-            total_disc_number_tag = TXXX(encoding=Encoding.UTF8, desc='DISCTOTAL', text=[f'{int(total_disc_number):02d}'])
+            total_disc_number_tag = TXXX(encoding=Encoding.UTF8, desc='DISCTOTAL',
+                                         text=[f'{int(total_disc_number):02d}'])
             self._mp3['TXXX:DISCTOTAL'] = total_disc_number_tag
         self._mp3.save()
 
     def fix_track_number_tags(self) -> None:
         pass
+
+    def get_track_number(self) -> str:
+        track_numbers = self._mp3.get('TRCK').text[0]
+        [current, _] = track_numbers.split('/')
+        return current
+
+    def get_disc_number(self) -> str:
+        disc_numbers = self._mp3.get('TPOS').text[0]
+        [current, _] = disc_numbers.split('/')
+        return current

@@ -76,3 +76,9 @@ class FlacSong(Song):
             self._flac['totaltracks'] = []
             self._flac['TRACKTOTAL'] = values
         self._flac.save()
+
+    def get_track_number(self) -> str:
+        return self._flac['TRACKNUMBER'][0]
+
+    def get_disc_number(self) -> str:
+        return self._flac['DISCNUMBER'][0]

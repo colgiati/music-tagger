@@ -63,3 +63,11 @@ class Song(ABC):
     @abstractmethod
     def fix_track_number_tags(self) -> None:
         pass
+
+    @abstractmethod
+    def get_track_number(self) -> str:
+        pass
+
+    @abstractmethod
+    def get_disc_number(self) -> str:
+        pass
