@@ -60,7 +60,7 @@ class FlacSong(Song):
         self._flac.save()
 
     def pad_disc_numbers(self) -> None:
-        for tag in self._track_number_tags:
+        for tag in self._disc_number_tags:
             [value] = self._flac.get(tag)
             self._flac[tag] = [f'{int(value):02d}']
         self._flac.save()

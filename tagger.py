@@ -8,20 +8,24 @@ from tag_component import TagComponent
 
 
 class Tagger:
-    _root_path: str
+    _root_paths: List[str]
     _taggers: List[TagComponent]
     _log: bool = False
 
-    def __init__(self, path: str, taggers: List[TagComponent], log: Optional[bool] = None):
-        self._root_path = path
+    def __init__(self, path: List[str] | str, taggers: List[TagComponent], log: Optional[bool] = None):
+        if isinstance(path, str):
+            self._root_paths = [path]
+        else:
+            self._root_paths = path
         self._taggers = taggers
         if log is not None:
             self._log = log
 
     def run(self):
-        if self._log:
-            print(self._root_path)
-        self._tag_directory(self._root_path)
+        for root_path in self._root_paths:
+            if self._log:
+                print(root_path)
+            self._tag_directory(root_path)
 
     def _tag_directory(self, path: str, depth: int = 1):
         for file in os.listdir(path):
